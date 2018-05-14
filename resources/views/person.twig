@@ -1,0 +1,51 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <h3 class="display-4 pt-5">{{ person.getFullName() }}</h3>
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4>Friends</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for friend in person.directFriends %}
+                    <li class="list-group-item">
+                        {{ friend.getFullName() }} <span class="badge badge-info">{{ friend.age }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="card mt-5">
+        <div class="card-header">
+            <h5>Friends of friends</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for collection in twoSteps %}
+                    {% for friendOf in collection %}
+                        {% if friendOf.id != person.id %}
+                            <li class="list-group-item">
+                                {{ friendOf.getFullName() }} <span class="badge badge-info">{{ friendOf.age }}</span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="card mt-5">
+        <div class="card-header">
+            <h6>Suggested friends</h6>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for person in suggested %}
+                    <li class="list-group-item">
+                        {{ person.getFullName() }} <span class="badge badge-info">{{ person.age }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
